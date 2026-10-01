@@ -31,7 +31,7 @@ export default function PricingCalculator() {
           </div>
 
           <div className="mt-4 flex items-end gap-3">
-            <span className="font-display text-5xl font-extrabold">{formatInr(amount)}</span>
+            <span className="font-display text-5xl font-black">{formatInr(amount)}</span>
             <AnimatePresence mode="wait">
               {bonusPercent > 0 && (
                 <motion.span

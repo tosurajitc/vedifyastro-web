@@ -20,7 +20,7 @@ npm run optimize-images  # one-off: PNG avatars in public/agents -> small WebP
 - `lib/pricing.js`: wallet bonus tiers **mirror** backend `walletController.calculateVAPoints`. The backend is the
   source of truth for what is credited; keep both in sync.
 - Theme: colours in `tailwind.config.js` (`cosmos`, `gold`, `ink`) come from the old site's `tokens.css`.
-  Fonts: Syne (display) + Manrope (body) via `next/font`.
+  Font: Inter (headings + body, like the Shukto/OPC sites) via `next/font`; h1/h2 use `font-black`.
 - Motion: framer-motion. Respect `prefers-reduced-motion` (handled globally in `globals.css`).
 
 ## Content rules

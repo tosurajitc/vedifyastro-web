@@ -11,7 +11,7 @@ export default function ClosingCTA() {
           <div className="absolute -left-20 -top-20 h-64 w-64 rounded-full bg-gold/20 blur-3xl" aria-hidden="true" />
           <div className="absolute -bottom-24 -right-16 h-72 w-72 rounded-full bg-rose/20 blur-3xl" aria-hidden="true" />
           <div className="relative">
-            <h2 className="mx-auto max-w-2xl font-display text-3xl font-extrabold tracking-tight sm:text-4xl">
+            <h2 className="mx-auto max-w-2xl font-display text-4xl font-black tracking-tight md:text-5xl">
               Your chart is already written. <span className="text-gold-grad">Start reading it.</span>
             </h2>
             <p className="mx-auto mt-4 max-w-xl text-ink-2">Free kundli in under a minute. Speak to an AI astrologer whenever you need clarity.</p>

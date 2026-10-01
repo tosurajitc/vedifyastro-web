@@ -23,8 +23,8 @@ module.exports = {
         ink: { 1: '#f0eaff', 2: '#9d8ec0', 3: '#5c5078' },
       },
       fontFamily: {
-        display: ['var(--font-syne)', 'sans-serif'],
-        sans: ['var(--font-manrope)', 'system-ui', 'sans-serif'],
+        display: ['var(--font-inter)', 'system-ui', 'sans-serif'],
+        sans: ['var(--font-inter)', 'system-ui', 'sans-serif'],
       },
       borderColor: {
         line: 'rgba(108,63,181,.22)',

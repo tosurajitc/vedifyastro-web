@@ -22,7 +22,7 @@ export default function Hero() {
             17 AI astrologers · 11 Indian languages · open 24×7
           </motion.div>
 
-          <motion.h1 {...fade(0.08)} className="mt-6 font-display text-[2.35rem] font-bold leading-[1.08] tracking-tight sm:text-5xl lg:text-[3.4rem]">
+          <motion.h1 {...fade(0.08)} className="mt-6 font-display text-4xl font-black leading-tight tracking-tight md:text-6xl">
             Your Vedic chart,
             <br />
             <span className="text-gold-grad">read by AI that knows Jyotish.</span>
