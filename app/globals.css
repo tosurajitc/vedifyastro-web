@@ -1,0 +1,38 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+  body { @apply bg-cosmos-900 text-ink-1 font-sans; }
+  ::selection { background: rgba(245, 158, 11, .35); color: #fff; }
+  :focus-visible { outline: 2px solid #f59e0b; outline-offset: 2px; border-radius: 6px; }
+}
+
+@layer components {
+  /* Frosted card used across the site */
+  .glass {
+    background: linear-gradient(160deg, rgba(108, 63, 181, .18), rgba(59, 0, 128, .22));
+    border: 1px solid rgba(108, 63, 181, .28);
+    backdrop-filter: blur(14px);
+  }
+  .text-gold-grad {
+    background: linear-gradient(135deg, #fde68a 0%, #f59e0b 50%, #C9A84C 100%);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+  .wrap { @apply mx-auto w-full max-w-6xl px-4 sm:px-6; }
+  .eyebrow { @apply text-xs font-bold uppercase tracking-[.22em] text-gold; }
+}
+
+/* Soft nebula behind everything */
+.nebula {
+  background:
+    radial-gradient(ellipse 70% 50% at 15% 0%, rgba(107, 33, 168, .32) 0%, transparent 65%),
+    radial-gradient(ellipse 55% 40% at 100% 30%, rgba(233, 30, 99, .10) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 45% at 50% 100%, rgba(59, 0, 128, .35) 0%, transparent 60%),
+    #0d0028;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .001ms !important; animation-iteration-count: 1 !important; transition-duration: .001ms !important; scroll-behavior: auto !important; }
+}

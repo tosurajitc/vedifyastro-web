@@ -1,0 +1,96 @@
+'use client'
+
+import { useEffect, useState } from 'react'
+import Link from 'next/link'
+import Image from 'next/image'
+import { AnimatePresence, motion } from 'framer-motion'
+import { Menu, X } from 'lucide-react'
+import siteConfig from '@/site.config'
+import { cn } from '@/lib/cn'
+
+export default function Header() {
+  const [open, setOpen] = useState(false)
+  const [scrolled, setScrolled] = useState(false)
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 12)
+    onScroll()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
+
+  // Close the mobile menu with Esc
+  useEffect(() => {
+    if (!open) return
+    const onKey = (e) => e.key === 'Escape' && setOpen(false)
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
+  }, [open])
+
+  return (
+    <header
+      className={cn(
+        'sticky top-0 z-50 transition-colors duration-300',
+        scrolled ? 'border-b border-line bg-cosmos-950/80 backdrop-blur-xl' : 'bg-transparent'
+      )}
+    >
+      <div className="wrap flex h-16 items-center justify-between">
+        <Link href="/" className="flex items-center gap-2.5" aria-label={`${siteConfig.brand.name} home`}>
+          <Image src={siteConfig.brand.logo} alt="" width={36} height={36} priority />
+          <span className="font-display text-lg font-bold tracking-tight">{siteConfig.brand.name}</span>
+        </Link>
+
+        <nav className="hidden items-center gap-1 md:flex" aria-label="Main">
+          {siteConfig.nav.map((item) => (
+            <Link key={item.href} href={item.href} className="rounded-full px-3.5 py-2 text-sm font-medium text-ink-2 transition hover:bg-white/5 hover:text-ink-1">
+              {item.label}
+            </Link>
+          ))}
+        </nav>
+
+        <div className="hidden items-center gap-2 md:flex">
+          <Link href="/login" className="rounded-full px-4 py-2 text-sm font-semibold text-ink-1 transition hover:bg-white/5">
+            Sign in
+          </Link>
+          <Link href="/login?next=/dashboard" className="rounded-full bg-gold-grad px-4 py-2 text-sm font-bold text-cosmos-950 shadow-glow-gold transition hover:brightness-110">
+            Get free kundli
+          </Link>
+        </div>
+
+        <button
+          type="button"
+          className="grid h-10 w-10 place-items-center rounded-full border border-line text-ink-1 md:hidden"
+          onClick={() => setOpen((v) => !v)}
+          aria-label={open ? 'Close menu' : 'Open menu'}
+          aria-expanded={open}
+        >
+          {open ? <X size={18} /> : <Menu size={18} />}
+        </button>
+      </div>
+
+      <AnimatePresence>
+        {open && (
+          <motion.nav
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: 'auto' }}
+            exit={{ opacity: 0, height: 0 }}
+            className="overflow-hidden border-t border-line bg-cosmos-950/95 backdrop-blur-xl md:hidden"
+            aria-label="Mobile"
+          >
+            <div className="wrap flex flex-col gap-1 py-4">
+              {siteConfig.nav.map((item) => (
+                <Link key={item.href} href={item.href} onClick={() => setOpen(false)} className="rounded-xl px-3 py-3 text-ink-1 hover:bg-white/5">
+                  {item.label}
+                </Link>
+              ))}
+              <div className="mt-2 grid grid-cols-2 gap-2">
+                <Link href="/login" onClick={() => setOpen(false)} className="rounded-full border border-line-2 py-2.5 text-center text-sm font-semibold">Sign in</Link>
+                <Link href="/login?next=/dashboard" onClick={() => setOpen(false)} className="rounded-full bg-gold-grad py-2.5 text-center text-sm font-bold text-cosmos-950">Free kundli</Link>
+              </div>
+            </div>
+          </motion.nav>
+        )}
+      </AnimatePresence>
+    </header>
+  )
+}
