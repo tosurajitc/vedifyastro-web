@@ -3,7 +3,7 @@ import Reveal from './Reveal'
 // Standard page section with an eyebrow, heading and optional lead text
 export default function Section({ id, eyebrow, title, lead, children, className = '' }) {
   return (
-    <section id={id} className={`scroll-mt-20 py-20 sm:py-24 ${className}`}>
+    <section id={id} className={`scroll-mt-20 py-24 sm:py-32 ${className}`}>
       <div className="wrap">
         {(eyebrow || title) && (
           <Reveal className="mx-auto mb-12 max-w-3xl text-center">

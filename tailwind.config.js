@@ -41,11 +41,14 @@ module.exports = {
       keyframes: {
         twinkle: { '0%,100%': { opacity: '.25' }, '50%': { opacity: '1' } },
         float: { '0%,100%': { transform: 'translateY(0)' }, '50%': { transform: 'translateY(-10px)' } },
+        // Continuous left-scroll for the specialist carousel (track holds the list twice)
+        marquee: { from: { transform: 'translateX(0)' }, to: { transform: 'translateX(-50%)' } },
       },
       animation: {
         twinkle: 'twinkle 4s ease-in-out infinite',
         float: 'float 7s ease-in-out infinite',
         'spin-slow': 'spin 120s linear infinite',
+        marquee: 'marquee 60s linear infinite',
       },
     },
   },

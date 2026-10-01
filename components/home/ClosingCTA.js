@@ -5,7 +5,7 @@ import siteConfig from '@/site.config'
 
 export default function ClosingCTA() {
   return (
-    <section className="py-20">
+    <section className="py-24 sm:py-32">
       <div className="wrap">
         <Reveal className="relative overflow-hidden rounded-[2rem] border border-gold/30 bg-gradient-to-br from-cosmos-600 via-cosmos-700 to-cosmos-900 p-8 text-center shadow-glow sm:p-14">
           <div className="absolute -left-20 -top-20 h-64 w-64 rounded-full bg-gold/20 blur-3xl" aria-hidden="true" />

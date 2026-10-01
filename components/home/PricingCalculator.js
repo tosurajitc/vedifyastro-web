@@ -106,6 +106,7 @@ export default function PricingCalculator() {
               ['Kundli, panchang & horoscopes', 'Free'],
               ['First 3 minutes with Ask VA', 'Free'],
               ['AI astrologer chat', `₹${PRICES.chatPerMinute}/min`],
+              ['Premium masters chat', `₹${PRICES.premiumChatPerMinute}/min`],
               ['Life-area report (1 year)', `₹${PRICES.report}`],
               ['Kundli matching', `₹${PRICES.kundliMatching}`],
               ['Personal remedies', `₹${PRICES.remedies}`],

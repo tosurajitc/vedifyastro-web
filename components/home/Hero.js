@@ -14,7 +14,7 @@ const fade = (delay) => ({
 
 export default function Hero() {
   return (
-    <section className="relative overflow-hidden pb-16 pt-10 sm:pt-16">
+    <section className="relative overflow-hidden pb-20 pt-10 sm:pb-24 sm:pt-16">
       <div className="wrap grid items-center gap-12 lg:grid-cols-[1.05fr_1fr]">
         <div>
           <motion.div {...fade(0)} className="inline-flex items-center gap-2 rounded-full border border-line-2 bg-white/5 px-3 py-1.5 text-xs font-semibold text-ink-2">
