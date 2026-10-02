@@ -5,7 +5,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { AnimatePresence, motion } from 'framer-motion'
-import { ChevronDown, Gift, LogOut, Wallet } from 'lucide-react'
+import { ChevronDown, Gift, LogOut, Sun, Wallet } from 'lucide-react'
 import { guideByKey } from '@/lib/guides'
 
 export const formatPoints = (n) => Math.floor(Number(n) || 0).toLocaleString('en-IN')
@@ -62,6 +62,9 @@ export default function UserMenu({ user, balance, onSignedOut }) {
               )}
               {user.onboarded && (
                 <>
+                  <Link href="/dashboard" role="menuitem" onClick={() => setOpen(false)} className="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm text-ink-1 hover:bg-white/5">
+                    <Sun size={16} className="ml-1 text-gold" /> Today’s sky
+                  </Link>
                   <Link href="/wallet" role="menuitem" onClick={() => setOpen(false)} className="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm text-ink-1 hover:bg-white/5">
                     <Wallet size={16} className="ml-1 text-gold" /> Wallet
                   </Link>

@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server'
 import { BACKEND_URL, clientIp, proxyHeaders } from '@/lib/server/backend'
-import { ACCESS_COOKIE } from '@/lib/server/session'
+import { ACCESS_COOKIE, forgetSession } from '@/lib/server/session'
 
 // Proxies every /api/* call from the browser to the Node backend, adding the session token from
 // the httpOnly cookie. Bodies stream through untouched, so PDFs and audio work too.
@@ -47,6 +47,9 @@ async function proxy(req, { params }) {
       { status: timedOut ? 504 : 502 }
     )
   }
+
+  // Profile / birth-detail changes must show up straight away, not after the session cache expires
+  if (hasBody && upstream.ok && (path.startsWith('birth-details') || path.startsWith('auth/profile'))) forgetSession(token)
 
   const out = new Headers()
   for (const h of PASS_BACK) {

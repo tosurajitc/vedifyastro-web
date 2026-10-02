@@ -10,7 +10,8 @@ export const dynamic = 'force-dynamic'
 export default async function LoginPage({ searchParams }) {
   const next = safeNext(searchParams?.next)
   const session = await loadSession()
-  if (session) redirect(session.onboarded ? next : `/onboarding?next=${encodeURIComponent(next)}`)
+  // onboarded null = backend unreachable: go on to the page, which shows a retry message
+  if (session) redirect(session.onboarded === false ? `/onboarding?next=${encodeURIComponent(next)}` : next)
 
   return (
     <section className="py-12 sm:py-20">
