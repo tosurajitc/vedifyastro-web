@@ -1,21 +1,21 @@
 /** @type {import('next').NextConfig} */
 
-// The Next server proxies /api/* to the Node backend, so the browser never calls the backend
-// directly (no CORS). On Railway set BACKEND_URL to the backend's private or public URL.
-const BACKEND_URL = process.env.BACKEND_URL || 'http://localhost:5000'
+// /api/* is proxied to the Node backend by app/api/[...path]/route.js (BACKEND_URL, server-side),
+// so the browser never calls the backend directly (no CORS).
 const isProd = process.env.NODE_ENV === 'production'
 
-// Razorpay Checkout loads a script and opens its own frame. Google sign-in redirects to accounts.google.com.
+// Razorpay Checkout loads a script and opens its own frame. Google sign-in loads its script and popup from
+// accounts.google.com. Birthplace search calls OpenStreetMap Nominatim from the browser.
 // Next's dev server needs 'unsafe-eval', so the policy is only sent in production.
 const csp = [
   "default-src 'self'",
-  "script-src 'self' 'unsafe-inline' https://checkout.razorpay.com https://static.cloudflareinsights.com",
-  "style-src 'self' 'unsafe-inline'",
+  "script-src 'self' 'unsafe-inline' https://checkout.razorpay.com https://accounts.google.com/gsi/client https://static.cloudflareinsights.com",
+  "style-src 'self' 'unsafe-inline' https://accounts.google.com/gsi/style",
   "font-src 'self' data:",
   "img-src 'self' data: blob: https:",
   "media-src 'self' blob: data:",
-  "connect-src 'self' https://lumberjack.razorpay.com https://www.googleapis.com https://cloudflareinsights.com",
-  "frame-src https://api.razorpay.com https://checkout.razorpay.com",
+  "connect-src 'self' https://lumberjack.razorpay.com https://www.googleapis.com https://accounts.google.com https://nominatim.openstreetmap.org https://cloudflareinsights.com",
+  "frame-src https://api.razorpay.com https://checkout.razorpay.com https://accounts.google.com",
   "frame-ancestors 'none'",
   "base-uri 'self'",
   "form-action 'self'",
@@ -24,12 +24,7 @@ const csp = [
 const nextConfig = {
   output: 'standalone', // minimal Docker image via .next/standalone
   poweredByHeader: false,
-  // AI agent replies can take a while; don't let the proxy drop the upstream connection early
-  experimental: { proxyTimeout: 180_000 },
   httpAgentOptions: { keepAlive: true },
-  async rewrites() {
-    return [{ source: '/api/:path*', destination: `${BACKEND_URL}/api/:path*` }]
-  },
   async redirects() {
     return [
       // Old static site URLs (the Play Store listing links to the delete-account page)

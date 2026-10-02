@@ -3,14 +3,36 @@
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
+import { usePathname } from 'next/navigation'
 import { AnimatePresence, motion } from 'framer-motion'
 import { Menu, X } from 'lucide-react'
 import siteConfig from '@/site.config'
 import { cn } from '@/lib/cn'
+import UserMenu from './UserMenu'
+
+// The httpOnly session cookie is invisible to scripts; va_in is a readable 'signed in' hint
+const hasSessionHint = () => typeof document !== 'undefined' && /(?:^|; )va_in=1/.test(document.cookie)
 
 export default function Header() {
   const [open, setOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
+  const [user, setUser] = useState(null)
+  const [balance, setBalance] = useState(null)
+  const pathname = usePathname()
+
+  // Re-check on navigation so the header updates right after login, onboarding or logout
+  useEffect(() => {
+    if (!hasSessionHint()) { setUser(null); setBalance(null); return }
+    let cancelled = false
+    fetch('/api/session').then((r) => r.json()).then(({ user }) => {
+      if (cancelled) return
+      setUser(user)
+      if (user?.onboarded) {
+        fetch('/api/wallet/balance').then((r) => r.json()).then((b) => !cancelled && setBalance(b?.data?.balance ?? null)).catch(() => {})
+      }
+    }).catch(() => {})
+    return () => { cancelled = true }
+  }, [pathname])
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 12)
@@ -49,12 +71,14 @@ export default function Header() {
         </nav>
 
         <div className="hidden items-center gap-2 md:flex">
+          {user ? <UserMenu user={user} balance={balance} onSignedOut={() => { setUser(null); setBalance(null) }} /> : <>
           <Link href="/login" className="rounded-full px-4 py-2 text-sm font-semibold text-ink-1 transition hover:bg-white/5">
             Sign in
           </Link>
           <Link href="/login?next=/dashboard" className="rounded-full bg-gold-grad px-4 py-2 text-sm font-bold text-cosmos-950 shadow-glow-gold transition hover:brightness-110">
             Get free kundli
           </Link>
+          </>}
         </div>
 
         <button
@@ -83,10 +107,14 @@ export default function Header() {
                   {item.label}
                 </Link>
               ))}
+              {user ? (
+                <div className="mt-2 flex justify-center"><UserMenu user={user} balance={balance} onSignedOut={() => { setUser(null); setBalance(null); setOpen(false) }} /></div>
+              ) : (
               <div className="mt-2 grid grid-cols-2 gap-2">
                 <Link href="/login" onClick={() => setOpen(false)} className="rounded-full border border-line-2 py-2.5 text-center text-sm font-semibold">Sign in</Link>
                 <Link href="/login?next=/dashboard" onClick={() => setOpen(false)} className="rounded-full bg-gold-grad py-2.5 text-center text-sm font-bold text-cosmos-950">Free kundli</Link>
               </div>
+              )}
             </div>
           </motion.nav>
         )}
