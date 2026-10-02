@@ -8,6 +8,7 @@ import { AnimatePresence, motion } from 'framer-motion'
 import { Menu, X } from 'lucide-react'
 import siteConfig from '@/site.config'
 import { cn } from '@/lib/cn'
+import { onBalance } from '@/lib/walletEvents'
 import UserMenu from './UserMenu'
 
 // The httpOnly session cookie is invisible to scripts; va_in is a readable 'signed in' hint
@@ -33,6 +34,9 @@ export default function Header() {
     }).catch(() => {})
     return () => { cancelled = true }
   }, [pathname])
+
+  // Chat deductions and recharges announce the new balance
+  useEffect(() => onBalance(setBalance), [])
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 12)

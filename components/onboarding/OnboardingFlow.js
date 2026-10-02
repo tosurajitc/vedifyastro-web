@@ -22,7 +22,7 @@ const STEPS = [
 
 // Shown before a gender is picked; afterwards the guide who will actually greet the user
 function GuideBubble({ gender, text }) {
-  const guide = gender === 'female' ? GUIDES.satyaban : gender ? GUIDES.savitri : null
+  const guide = gender === 'male' ? GUIDES.savitri : gender ? GUIDES.satyaban : null
   return (
     <div className="flex items-start gap-4">
       <div className="relative shrink-0">

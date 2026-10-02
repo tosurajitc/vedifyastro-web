@@ -9,7 +9,7 @@ const REFRESH_COOKIE = 'va_rt'
 const BACKEND_URL = (process.env.BACKEND_URL || 'http://localhost:5000').replace(/\/$/, '')
 
 // Pages that need a signed-in user
-const PROTECTED = ['/dashboard', '/onboarding', '/chat', '/wallet', '/profile', '/kundli', '/horoscope', '/reports']
+const PROTECTED = ['/dashboard', '/onboarding', '/chat', '/wallet', '/profile', '/kundli', '/horoscope', '/reports', '/remedies']
 
 async function refreshAccess(refreshToken) {
   try {

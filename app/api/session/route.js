@@ -3,8 +3,10 @@ import { loadSession } from '@/lib/server/session'
 
 export const dynamic = 'force-dynamic'
 
-// GET — who is signed in (used by the header). { user: null } when logged out.
+// GET — who is signed in (used by the header). { user: null } when logged out. Birth data stays on the server.
 export async function GET() {
-  const user = await loadSession()
+  const session = await loadSession()
+  if (!session) return NextResponse.json({ user: null })
+  const { birth, ...user } = session
   return NextResponse.json({ user })
 }
