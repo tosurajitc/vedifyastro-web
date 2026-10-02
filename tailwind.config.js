@@ -43,12 +43,21 @@ module.exports = {
         float: { '0%,100%': { transform: 'translateY(0)' }, '50%': { transform: 'translateY(-10px)' } },
         // Continuous left-scroll for the specialist carousel (track holds the list twice)
         marquee: { from: { transform: 'translateX(0)' }, to: { transform: 'translateX(-50%)' } },
+        // Same track, moving right (language band rows drift toward / away from the centre)
+        'marquee-rev': { from: { transform: 'translateX(-50%)' }, to: { transform: 'translateX(0)' } },
+        // Dashes travelling along the language band's connector lines
+        dash: { to: { strokeDashoffset: '-24' } },
+        // Rings breathing around the language band's centre
+        breathe: { '0%,100%': { transform: 'scale(1)', opacity: '.55' }, '50%': { transform: 'scale(1.04)', opacity: '1' } },
       },
       animation: {
         twinkle: 'twinkle 4s ease-in-out infinite',
         float: 'float 7s ease-in-out infinite',
         'spin-slow': 'spin 120s linear infinite',
         marquee: 'marquee 60s linear infinite',
+        'marquee-rev': 'marquee-rev 60s linear infinite',
+        dash: 'dash 1.2s linear infinite',
+        breathe: 'breathe 5s ease-in-out infinite',
       },
     },
   },

@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import siteConfig from '@/site.config'
+import AppDownload from './AppDownload'
 
 function Column({ title, links }) {
   return (
@@ -21,6 +22,7 @@ export default function Footer() {
   const year = new Date().getFullYear()
   return (
     <footer className="relative border-t border-line bg-cosmos-950/60">
+      <AppDownload />
       <div className="wrap grid gap-10 py-14 md:grid-cols-[1.4fr_1fr_1fr_1fr]">
         <div>
           <div className="flex items-center gap-2.5">

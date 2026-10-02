@@ -1,4 +1,5 @@
 import Hero from '@/components/home/Hero'
+import LanguageFlow from '@/components/home/LanguageFlow'
 import AgentsShowcase from '@/components/home/AgentsShowcase'
 import Features from '@/components/home/Features'
 import HowItWorks from '@/components/home/HowItWorks'
@@ -10,6 +11,7 @@ export default function HomePage() {
   return (
     <>
       <Hero />
+      <LanguageFlow />
       <AgentsShowcase />
       <Features />
       <HowItWorks />

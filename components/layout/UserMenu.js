@@ -5,7 +5,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { AnimatePresence, motion } from 'framer-motion'
-import { ChevronDown, LogOut, Wallet } from 'lucide-react'
+import { ChevronDown, Gift, LogOut, Wallet } from 'lucide-react'
 import { guideByKey } from '@/lib/guides'
 
 export const formatPoints = (n) => Math.floor(Number(n) || 0).toLocaleString('en-IN')
@@ -35,9 +35,9 @@ export default function UserMenu({ user, balance, onSignedOut }) {
   return (
     <div className="flex items-center gap-2">
       {balance !== null && (
-        <span className="inline-flex items-center gap-1.5 rounded-full border border-gold/30 bg-gold/10 px-3 py-1.5 text-sm font-bold text-gold-soft" title="VA Points (1 point = ₹1)">
+        <Link href="/wallet" className="inline-flex items-center gap-1.5 rounded-full border border-gold/30 bg-gold/10 px-3 py-1.5 text-sm font-bold text-gold-soft transition hover:bg-gold/20" title="VA Points (1 point = ₹1) · open wallet">
           <Wallet size={15} /> {formatPoints(balance)}
-        </span>
+        </Link>
       )}
       <div className="relative" ref={ref}>
         <button type="button" onClick={() => setOpen((v) => !v)} aria-expanded={open} aria-haspopup="menu"
@@ -59,6 +59,16 @@ export default function UserMenu({ user, balance, onSignedOut }) {
                   <span className="relative h-6 w-6 overflow-hidden rounded-full"><Image src={guide.avatar} alt="" fill sizes="24px" className="object-cover" /></span>
                   Talk to {guide.name}
                 </Link>
+              )}
+              {user.onboarded && (
+                <>
+                  <Link href="/wallet" role="menuitem" onClick={() => setOpen(false)} className="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm text-ink-1 hover:bg-white/5">
+                    <Wallet size={16} className="ml-1 text-gold" /> Wallet
+                  </Link>
+                  <Link href="/wallet/refer" role="menuitem" onClick={() => setOpen(false)} className="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm text-ink-1 hover:bg-white/5">
+                    <Gift size={16} className="ml-1 text-gold" /> Refer & earn
+                  </Link>
+                </>
               )}
               <button type="button" role="menuitem" onClick={signOut} className="flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-sm text-ink-2 hover:bg-white/5 hover:text-ink-1">
                 <LogOut size={16} className="ml-1" /> Sign out

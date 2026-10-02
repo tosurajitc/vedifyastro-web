@@ -7,6 +7,9 @@ const siteConfig = {
     logo: '/brand/logo.webp',
     email: 'shuktoai@gmail.com',
     playStore: 'https://play.google.com/store/apps/details?id=com.vedifyastro.app',
+    appStore: null, // set when the iOS app is published
+    // Flip to true when the Android app is public; until then the footer shows "Coming soon"
+    appLive: false,
   },
   seo: {
     title: 'VedifyAstro — AI Vedic Astrology: Kundli, Horoscope & Expert AI Astrologers',
@@ -31,7 +34,7 @@ const siteConfig = {
     ],
     company: [
       { label: 'Contact', href: 'mailto:shuktoai@gmail.com' },
-      { label: 'Get the app', href: 'https://play.google.com/store/apps/details?id=com.vedifyastro.app' },
+      { label: 'Get the app', href: '#get-app' },
     ],
     legal: [
       { label: 'Privacy Policy', href: '/privacy-policy' },

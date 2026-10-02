@@ -14,7 +14,7 @@ const csp = [
   "font-src 'self' data:",
   "img-src 'self' data: blob: https:",
   "media-src 'self' blob: data:",
-  "connect-src 'self' https://lumberjack.razorpay.com https://www.googleapis.com https://accounts.google.com https://nominatim.openstreetmap.org https://cloudflareinsights.com",
+  "connect-src 'self' https://api.razorpay.com https://lumberjack.razorpay.com https://www.googleapis.com https://accounts.google.com https://nominatim.openstreetmap.org https://cloudflareinsights.com",
   "frame-src https://api.razorpay.com https://checkout.razorpay.com https://accounts.google.com",
   "frame-ancestors 'none'",
   "base-uri 'self'",
