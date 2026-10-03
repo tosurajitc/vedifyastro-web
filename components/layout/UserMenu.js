@@ -5,7 +5,8 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { AnimatePresence, motion } from 'framer-motion'
-import { ChevronDown, Gift, LogOut, Sun, Wallet } from 'lucide-react'
+import { ChevronDown, Gift, LogOut, ShieldCheck, Sun, Wallet } from 'lucide-react'
+import { api } from '@/lib/api'
 import { guideByKey } from '@/lib/guides'
 
 export const formatPoints = (n) => Math.floor(Number(n) || 0).toLocaleString('en-IN')
@@ -16,6 +17,13 @@ export default function UserMenu({ user, balance, onSignedOut }) {
   const [open, setOpen] = useState(false)
   const ref = useRef(null)
   const guide = guideByKey(user.guide)
+  // Asked once, the first time the menu opens, so ordinary page loads don't cost a backend call
+  const [isAdmin, setIsAdmin] = useState(null)
+
+  useEffect(() => {
+    if (!open || isAdmin !== null || !user.onboarded) return
+    api('/admin/check-role').then((r) => setIsAdmin(!!r.isAdmin)).catch(() => setIsAdmin(false))
+  }, [open, isAdmin, user.onboarded])
 
   useEffect(() => {
     if (!open) return
@@ -72,6 +80,11 @@ export default function UserMenu({ user, balance, onSignedOut }) {
                     <Gift size={16} className="ml-1 text-gold" /> Refer & earn
                   </Link>
                 </>
+              )}
+              {isAdmin && (
+                <Link href="/admin" role="menuitem" onClick={() => setOpen(false)} className="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm text-ink-1 hover:bg-white/5">
+                  <ShieldCheck size={16} className="ml-1 text-gold" /> Admin panel
+                </Link>
               )}
               <button type="button" role="menuitem" onClick={signOut} className="flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-sm text-ink-2 hover:bg-white/5 hover:text-ink-1">
                 <LogOut size={16} className="ml-1" /> Sign out
