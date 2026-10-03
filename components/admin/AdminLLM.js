@@ -67,7 +67,9 @@ export default function AdminLLM() {
   }, [rows])
 
   // A backend without the date grouping silently falls back to grouping by feature
-  const dateUnsupported = groupBy === 'date' && rows.length > 0 && rows.some((r) => !isYmd(r.group_key))
+  // (an empty key is a log row without a timestamp, not an old backend)
+  const dateUnsupported = groupBy === 'date' && rows.some((r) => r.group_key != null && !isYmd(r.group_key))
+  const undated = groupBy === 'date' ? merged.get('unknown') : null
 
   // Every day in the period, with zeros for days without calls, oldest first
   const days = useMemo(() => {
@@ -139,12 +141,20 @@ export default function AdminLLM() {
                 <AlertTriangle size={16} className="mt-0.5 shrink-0" />
                 The live backend doesn’t support grouping by day yet. Deploy the backend update (adminController.js) to Railway, then reload this page.
               </p>
+              <p className="mt-2 text-xs text-ink-3">
+                It grouped by: {[...new Set(rows.map((r) => String(r.group_key)))].slice(0, 5).join(', ')}
+              </p>
             </Panel>
           ) : groupBy === 'date' ? (
             <>
               <Panel title="Per day" icon={CalendarDays}
                 action={<Chips options={METRICS} value={metric} onChange={setMetric} />}>
                 <ColumnChart rows={days.map((d) => ({ key: d.key, label: shortDay(d.key), value: d[metric] }))} format={metricFormat} />
+                {undated && (
+                  <p className="mt-4 text-sm text-gold-soft">
+                    {num(undated.requests)} logged calls have no timestamp ({num(undated.tokens)} tokens, {usd(undated.cost)}), so they aren’t on any day. They are included in the totals above.
+                  </p>
+                )}
                 {days.length > 0 && (
                   <p className="mt-4 text-sm text-ink-2">
                     {activeDays} of {days.length} days with LLM calls
